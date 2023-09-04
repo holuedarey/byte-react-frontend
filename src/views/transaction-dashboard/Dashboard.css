@@ -1,0 +1,123 @@
+.dashboard {
+  background-color: #ffffff;
+  border: 0.5px solid #CBCBCB;
+}
+
+.dashboard .summary-heading {
+  color: #585858;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.summary-amount {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.success {
+  color: #00865A;
+}
+
+.count-success {
+  color: #041841;
+}
+
+.terminal-success {
+  color: #133855;
+}
+
+.failed {
+  color: #FF024B;
+  margin-top: 22px;
+}
+
+.count-failed {
+  color: #7E7E7E;
+  margin-top: 22px;
+}
+
+.terminal-failed {
+  color: #3E729B;
+  margin-top: 22px;
+}
+
+.failed-percent {
+  color: #9A9A9A;
+  font-size: 14px;
+}
+
+.failed-percent span {
+  color: #F23551;
+  margin-right: 10px;
+}
+
+.success-percent {
+  font-size: 14px;
+  color: #9A9A9A;
+  /* margin-bottom: 22px; */
+}
+
+.success-percent span {
+  color: #159E94;
+  margin-right: 10px;
+}
+
+
+.circle-bar{
+    padding-left: 1rem;
+  }
+
+.circle-bar-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    padding: 30px;
+}
+
+.dashboard .CircularProgressbar {
+    /* width: 90% !important; */
+    vertical-align: middle !important;
+}
+
+.dashboard .CircularProgressbar-path {
+    stroke-width: 10;
+  }
+
+  .dashboard .CircularProgressbar-trail {
+    stroke-width: 10;
+}
+
+.center-label {
+  color: #9A9A9A;;
+}
+
+.center-label .amount {
+  color: #3E4095;
+}
+
+.label {
+  display: flex;
+  justify-content: start;
+  gap: 10px;
+  color: #9A9A9A;
+  font-size: 12px;
+}
+
+.data-label {
+  width: 11px;
+  height: 12px; 
+}
+
+.value {
+  background-color: #00865A;
+}
+
+.volume {
+  background-color: #021623;
+}
+
+.terminal {
+  background-color: #406A99;
+}

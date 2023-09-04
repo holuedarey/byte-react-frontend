@@ -1,0 +1,28 @@
+.tab-view {
+    margin-top: 32px;
+}
+
+.tab-view .nav {
+    gap: 10px;
+}
+
+.tab-view .nav-link {
+    /* width: 245px; */
+    background-color: #DBDBDB80;
+    color: #838383;
+    text-align: center;
+    padding: 18px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.tab-view .nav-active {
+    background-color: #ffffff !important;
+    color: #016aa7 !important;
+    border-radius: 0 !important;
+}
+
+.tab-item {
+    display: flex;
+    justify-content: space-between;
+}

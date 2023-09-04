@@ -1,0 +1,21 @@
+.merchant-view {
+    background-color: #ffffff;
+    border: 0.5px solid #CBCBCB;
+    padding: 20px;
+}
+
+.merchant-count {
+ margin-left: 30px;
+}
+
+.merchant-count .heading {
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+.merchant-count .count {
+    color: #2A3B5F;
+    font-weight: 600;
+    font-size: 24px;
+}

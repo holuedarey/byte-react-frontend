@@ -1,0 +1,42 @@
+.circular-progressbar {
+    position: relative;
+    height: 180px;
+    width: 180px;
+}
+
+.circular-chart {
+    display: block;
+    margin: 0px auto;
+    max-width: 100%;
+    max-height: 180px;
+}
+
+.circle-bg {
+    fill: none;
+}
+
+.circle {
+    fill: none;
+}
+
+.center-content {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    margin-top: -79%;
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-text {
+    margin-bottom: 5px;
+}
+
+.center-value {
+    color: #3E4095;
+    text-transform: capitalize;
+    opacity: 1;
+}

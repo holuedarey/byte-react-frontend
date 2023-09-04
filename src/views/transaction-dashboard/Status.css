@@ -1,0 +1,87 @@
+.status {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 0.5px solid #CBCBCB;
+    opacity: 1;
+    padding: 50px 20px 25px 20px;
+}
+
+.status .summary {
+    border-bottom: 0.5px solid #DADCDE;
+    color: #838383;
+    font-size: 16px;
+}
+
+.status .total-terminal {
+    border-inline: 2px dashed #DADCDE;
+}
+
+.status .summary-total {
+    color: #091C46;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0px;
+    opacity: 1;
+}
+
+.status .total .success-value {
+    color: #00865A;
+    font-weight: 500;
+    margin-top: 7px;
+}
+
+.status .total .failed-value {
+    font-weight: 500;
+    margin-top: 7px;
+    color: #FF024B;
+}
+
+.status .terminal-count {
+    color: #154FC9;
+    font-weight: 500;
+    margin-top: 7px;
+}
+
+.status .summary-heading {
+    color: #154FC9;
+    margin-bottom: 20px;
+}
+
+.terminal-progress-summary .heading {
+    color: #154FC9B3;
+    font-size: 14px;
+}
+
+.terminal-progress-summary .total-value {
+    color: #091C46;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0px;
+    opacity: 1;
+    margin-bottom: 20px;
+}
+
+.status .fa-angle-down {
+    color: #016AA7;
+    font-size: 16px;
+    padding-left: 10px;
+}
+
+.circular-bar {
+    width: 90%;
+}
+
+.circular-bar img {
+    height: 40px;
+}
+
+.status .CircularProgressbar-path {
+    stroke-width: 3;
+  }
+
+.status .CircularProgressbar-trail {
+    stroke-width: 3;
+}
+
+/* .circle-bar {
+    width: 120px !important;
+} */

@@ -1,0 +1,75 @@
+.same-day .create-config {
+    background-color: #ffffff;
+    border: 0.5px solid #CBCBCB;
+    padding: 40px;
+    font-size: 14px;
+}
+
+.create-config .heading {
+    font-size: 14px;
+    color: #194065;
+}
+
+.create-config label {
+    color: #000000;
+}
+
+.create-config .add-config-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    color: #016AA7;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+.create-config .add-config-btn span {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.same-day input {
+    background: #EBEBEBC9 0% 0% no-repeat padding-box;
+    border: 1px solid #707070;
+    border-radius: 4px;
+}
+
+.create-config .form-inputs {
+    display: flex;
+    gap: 15px;
+}
+
+.create-config .form-inputs .form-control{
+    width: 360px;
+}
+
+.delete-row {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.delete-row .btn {
+    background-color: transparent;
+    border: none;
+    color: #016AA7;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+.merchant-config {
+    background-color: #ffffff;
+    border: 0.5px solid #CBCBCB;
+    opacity: 1;
+    padding: 40px;
+    font-size: 14px;
+}
+
+.merchant-config .form-label {
+    color: #000000;
+}
+
+.merchant-config .btn {
+    width: 120px;
+}

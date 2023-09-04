@@ -1,0 +1,120 @@
+.trans-dashboard {
+    padding: 32px;
+}
+
+.dashboard-param {
+    margin-top: 80px;
+}
+
+.dashboard-param .nav-pills {
+    border: 0.5px solid #016AA7;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    opacity: 1;
+}
+
+.dashboard-param .nav-link {
+    padding: 10px;
+    padding-right: 0;
+}
+
+.dashboard-param .nav-link.active {
+    background-color: #045E932B;
+    border-radius: 8px;
+}
+
+.dashboard-param .nav-link button {
+    border: 0;
+    color: #8D8D8D;
+    background-color: transparent;
+    padding-inline: 10px;
+}
+
+.status-param {
+    margin-top: 80px;
+    display: flex;
+    gap: 15px;
+}
+
+.status-param select {
+    background-color: #016AA719;
+    border: 0.5px solid #016AA7;
+    border-radius: 4px;
+    opacity: 1;
+    width: 152px;
+    height: 42px;
+    padding-left: 20px;
+    margin-top: 23px;
+}
+
+.date-range {
+    position: relative;
+    display: flex;
+    width: 315px;
+}
+
+.date-range label {
+    margin-bottom: 2px;
+    color: #717171;
+}
+
+.date-range input {
+    background-color: transparent;
+    border: 0.5px solid #016AA7;
+    border-radius: 4px;
+    opacity: 1;
+    width: 152px;
+    height: 42px;
+    color: #717171;
+    padding-left: 20px;
+}
+
+.date-range .start .fa-calendar-days {
+    position: absolute;
+    top: 35px;
+    left: 130px;
+    color: #016AA7;
+}
+
+.date-range .end .fa-calendar-days {
+    position: absolute;
+    top: 35px;
+    right: 10px;
+    color: #016AA7;
+}
+
+.history-param {
+    margin-top: 80px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.history-param .search-input {
+    border: 0.5px solid #016AA7;
+    border-radius: 4px;
+    opacity: 1;
+    font-size: 10px;
+    margin-top: 20px;
+    padding: 13px;
+    width: 240px;
+    margin-right: 15px;
+}
+
+.history-param .select-search {
+    display: flex;
+    flex-direction: column;
+    margin-right: 15px;
+}
+
+.history-param .select-search select {
+    border: 0.5px solid #016AA7;
+    width: 130px;
+    border-radius: 4px;
+    padding: 9px;
+    background-color: transparent;
+    color: #016AA7;
+}

@@ -1,0 +1,20 @@
+.file-upload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.file-upload-card {
+    background: #FFFFFF;
+    opacity: 1;
+    width: 400px;
+    height: 230px;
+    margin-top: -60px;
+    padding: 30px;
+}
+
+.file-upload-area {
+    border: 2px dashed #3359D7;
+    padding: 10px;
+    color: #3359D7;
+}
