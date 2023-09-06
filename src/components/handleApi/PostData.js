@@ -18,7 +18,7 @@ export default function PostData(url, data) {
         responseJson?.data?.token &&
           localStorage.setItem("token", responseJson.data.token);
         responseJson?.data?.token &&
-          localStorage.setItem("user", JSON.stringify(responseJson.data.user));
+          localStorage.setItem("user", JSON.stringify(responseJson?.data?.user));
 
         resolve(responseJson);
       })

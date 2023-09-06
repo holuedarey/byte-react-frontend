@@ -1,21 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Table from "../../../components/Table";
-import Data from "../../../data.json";
 import Modal from "../../../components/Modal";
+import ModalTerminalUpload from "../../../components/ModalUploadTerminal";
 import Backdrop from "../../../components/Backdrop";
-import HandlePostApi from "../../../components/handleApi/HandlePostApi";
 
 export default function StatusDetails({ summary, terminals, pageStart }) {
   const data = terminals?.terminalDetails ?? [];
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [checked, setCheckbox] = React.useState(false);
-
+  const [modalIsOpenUpload, setModalIsOpenUpload] = useState(false);
   function addTerminalHandler() {
     setModalIsOpen(true);
   }
   function closeModalHandler() {
     setModalIsOpen(false)
   }
+
+  function uploadTerminalHandler() {
+    setModalIsOpenUpload(true);
+  }
+  function closeUploadModalHandler() {
+    setModalIsOpenUpload(false)
+  }
+
   function handleEdit(terminal = null){
     console.log("Edit Click");
   }
@@ -81,9 +87,15 @@ export default function StatusDetails({ summary, terminals, pageStart }) {
               <button className="btn" onClick={addTerminalHandler}>
                 Add Terminal
               </button>
+              <button className="btn" onClick={uploadTerminalHandler}>
+                Upload Terminal
+              </button>
             </div>
             {modalIsOpen && <Modal onCancel={closeModalHandler} onConfirm={closeModalHandler} children={<></>} />}
             {modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
+
+            {modalIsOpenUpload && <ModalTerminalUpload onCancel={closeUploadModalHandler} onConfirm={closeModalHandler} children={<></>} />}
+            {modalIsOpenUpload && <Backdrop onCancel={closeUploadModalHandler} />}
           </div>
           <Table columns={columns} data={data} />
         </div>
