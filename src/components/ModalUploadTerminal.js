@@ -34,9 +34,10 @@ function ModalTerminalUpload(props) {
                 setMsg(message[0]);
                 return;
             }
-            console.log("response", response)
-            setMsg("Terminal Upload Created Successfully");
-            cancelHandler()
+            console.log("response", response?.data?.responseMessage);
+            const msg = `Terminal Upload | ${response?.data?.data?.successful?.length ? "Successful : 0" + response?.data?.data?.successful?.length: "Successful : 0"}, ${response?.data?.data?.failed?.length ? "Failed : " + response?.data?.data?.failed?.length + ", These Record(s) Already Exist": "Failed : 0"}`;
+            setMsg(msg);
+            // cancelHandler()
         }).catch(function (error) {
             console.log(error);
         });
@@ -49,6 +50,7 @@ function ModalTerminalUpload(props) {
                 <form onSubmit={addTerminalSubmit}>
                     <h6 className="text-center">Upload Bulk Terminal</h6>
                     <hr />
+                   {msg != "" ? <p className="alert alert-info" >{msg}</p>  : <></>} 
                     {isSelected ? (
                         <div>
                             <p>Filename: {selectedFile.name}</p>
@@ -80,7 +82,8 @@ function ModalTerminalUpload(props) {
                             </div>
                         </div>
                     </div>
-                    <button type="submit" className="btn btn-primary">
+                    <hr />
+                    <button type="submit" className="btn btn-primary" disabled={!isSelected}>
                         Upload Terminal
                     </button>
                 </form>

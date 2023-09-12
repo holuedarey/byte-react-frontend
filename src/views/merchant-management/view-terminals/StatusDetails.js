@@ -59,7 +59,7 @@ export default function StatusDetails({ summary, terminals, pageStart }) {
           const statusCehck = data[row.row.index]?.enabled;
           return <>
             <div className="form-check form-switch">
-              <label className="form-check-label" htmlFor="flexSwitchCheckChecked">{data[row.row.index]?.block ? "Enabled": "Disabled"}</label>
+              <label className="form-check-label" htmlFor="flexSwitchCheckChecked">{statusCehck ? "Enabled": "Disabled"}</label>
               <input className="form-check-input" type="checkbox" name="enabled" role="switch" id="enabled" defaultChecked={statusCehck} disabled={true} />
             </div>
           </>
