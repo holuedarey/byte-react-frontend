@@ -50,7 +50,7 @@ function ModalTerminalUpload(props) {
                 <form onSubmit={addTerminalSubmit}>
                     <h6 className="text-center">Upload Bulk Terminal</h6>
                     <hr />
-                   {msg != "" ? <p className="alert alert-info" >{msg}</p>  : <></>} 
+                   {msg !== "" ? <p className="alert alert-info" >{msg}</p>  : <></>} 
                     {isSelected ? (
                         <div>
                             <p>Filename: {selectedFile.name}</p>

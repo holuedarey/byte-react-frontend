@@ -7,7 +7,7 @@ import axios from 'axios';
 // const navigate = useNavigate();
 // Create an Axios instance with default configurations
 const httpClient = axios.create({
-    baseURL: "http://127.0.0.1:5006/api/v1/", // Replace with your API base URL
+    baseURL: "http://16.170.207.247:5006/api/v1/", // Replace with your API base URL
 });
 
 // Add request interceptor
@@ -16,7 +16,7 @@ httpClient.interceptors.request.use(
         // You can modify the request config here (e.g., add headers, authentication tokens)
         const jwtToken = localStorage.getItem('token');
         //decrpt the token to knowif it has expire
-        if (jwtToken == null) {
+        if (jwtToken === null) {
             // navigate("/");
             console.log("Invalid Token or expire    ")
         }
@@ -38,7 +38,7 @@ httpClient.interceptors.response.use(
         // You can handle error responses here (e.g., show error messages)
         console.log("response", error?.response?.status);
         const status = error?.response?.status;
-        if (status == 401) {
+        if (status === 401) {
             window.location.href = '/';
             console.log("Expired Token");
         } else if (status >= 500) {
