@@ -126,53 +126,7 @@ export default function History({
             </div>
           </div>
         ))}
-        :{<div className="row">
-          <div className="col">
-            <div className="border rounded-3 text-center p-3">
-              <div className="rounded-circle border summary-icon mb-2">
-                <i className="fas fa-university mt-2"></i>
-              </div>
-              <p className="fs-7 mb-1">Issuer/Switch Inoperative</p>
-              <p className="fs-4 fw-bold text-dark">18,423</p>
-            </div>
-          </div>
-          <div className="col">
-            <div className="border rounded-3 text-center p-3">
-              <div className="rounded-circle border summary-icon mb-2">
-                <i className="fas fa-university mt-2"></i>
-              </div>
-              <p className="fs-7 mb-1">No Sufficient Fund</p>
-              <p className="fs-4 fw-bold text-dark">6,987</p>
-            </div>
-          </div>
-          <div className="col">
-            <div className="border rounded-3 text-center p-3">
-              <div className="rounded-circle border summary-icon mb-2">
-                <i className="fas fa-university mt-2"></i>
-              </div>
-              <p className="fs-7 mb-1">No response</p>
-              <p className="fs-4 fw-bold text-dark">5,768</p>
-            </div>
-          </div>
-          <div className="col">
-            <div className="border rounded-3 text-center p-3">
-              <div className="rounded-circle border summary-icon mb-2">
-                <i className="fas fa-university mt-2"></i>
-              </div>
-              <p className="fs-7 mb-1">Incorrect Pin</p>
-              <p className="fs-4 fw-bold text-dark">10,956</p>
-            </div>
-          </div>
-          <div className="col">
-            <div className="border rounded-3 text-center p-3">
-              <div className="rounded-circle border summary-icon mb-2">
-                <i className="fas fa-university mt-2"></i>
-              </div>
-              <p className="fs-7 mb-1">Do Not Honor</p>
-              <p className="fs-4 fw-bold text-dark">1,244</p>
-            </div>
-          </div>
-        </div>}
+        
 
       </div>
       <div>

@@ -3,14 +3,6 @@ import HandlePostApi from "./handleApi/HandlePostApi";
 import httpClient from "../helpers/RequestInterceptor";
 
 function Modal(props) {
-    function cancelHandler() {
-        props.onCancel()
-    }
-    function confirmHandler() {
-        props.onConfirm()
-
-    }
-
     const [err, setErr] = React.useState(false);
     const [msg, setMsg] = React.useState("");
     const [checked, setCheckbox] = React.useState(false);
@@ -18,6 +10,11 @@ function Modal(props) {
     const [isLoading, setLoading] = useState(false);
 
     const url = "terminal/assign/single?merchantCode=4B755C15C4B";
+
+    function cancelHandler() {
+        setMsg("hello you there?")
+        props.onCancel("msg")
+    }
 
     const [inputValues, setInputValue] = useState({
         "terminalId": "",
@@ -137,7 +134,7 @@ function Modal(props) {
 
     const addTerminalSubmit = (e) => {
         e.preventDefault();
-        checkValidation()       
+        checkValidation()
         httpClient.post(url, payload, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -165,7 +162,7 @@ function Modal(props) {
                 <form onSubmit={addTerminalSubmit}>
                     <h6 className="text-center">Create A New Terminal</h6>
                     <hr />
-                    {msg && msg}
+                    {msg !== "" ? <p className="alert alert-info" >{msg}</p> : <></>}
                     <div className="row mb-1 mt-1">
                         <div className="col">
                             <div className="">
@@ -178,6 +175,7 @@ function Modal(props) {
                                     id="terminalId"
                                     placeholder="Enter Terminal Id"
                                     name="terminalId"
+                                    required
                                     onChange={(e) => handleChange(e)}
                                     value={inputValues.terminalId}
                                 />
@@ -199,6 +197,7 @@ function Modal(props) {
                                     id="serialNumber"
                                     placeholder="Enter Serial Number"
                                     name="serialNumber"
+                                    required
                                     onChange={(e) => handleChange(e)}
                                     value={inputValues.serialNumber}
                                 />
@@ -216,6 +215,7 @@ function Modal(props) {
                                     id="logoUrl"
                                     placeholder="Enter Logo Url"
                                     name="logoUrl"
+                                    required
                                     onChange={(e) => handleChange(e)}
                                     value={inputValues.logoUrl}
                                 />
@@ -236,6 +236,7 @@ function Modal(props) {
                                     id="physicalAddress"
                                     placeholder="Enter physical Address"
                                     name="physicalAddress"
+                                    required
                                     onChange={(e) => handleChange(e)}
                                     value={inputValues.physicalAddress}
                                 />
@@ -253,6 +254,7 @@ function Modal(props) {
                                     id="postalAddress"
                                     placeholder="Enter Postal Address"
                                     name="postalAddress"
+                                    required
                                     onChange={(e) => handleChange(e)}
                                     value={inputValues.postalAddress}
                                 />
@@ -273,6 +275,7 @@ function Modal(props) {
                                     id="phone"
                                     placeholder="Enter Phone Number"
                                     name="phone"
+                                    required
                                     onChange={(e) => handleChange(e)}
                                     value={inputValues.phone}
                                 />
@@ -290,6 +293,7 @@ function Modal(props) {
                                     id="email"
                                     placeholder="Enter email"
                                     name="email"
+                                    required
                                     onChange={(e) => handleChange(e)}
                                     value={inputValues.email}
                                 />
@@ -317,7 +321,7 @@ function Modal(props) {
                         </div>
                         <div className="col">
                             <div className="form-check form-switch margin-top">
-                                <label className="form-check-label" htmlFor="flexSwitchCheckChecked">{checked ? 'Disable':'Enable'}</label>
+                                <label className="form-check-label" htmlFor="flexSwitchCheckChecked">{checked ? 'Disable' : 'Enable'}</label>
                                 <input className="form-check-input" type="checkbox" name="enabled" role="switch" id="enabled" onChange={(e) => setCheckbox(!checked)}
                                     value={checked} />
                             </div>

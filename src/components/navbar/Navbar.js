@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import avatar from '../../images/avatar.jpg';
+import logo from '../../images/logo.png';
 import './Navbar.css'
 
 export default function Navbar() {
@@ -13,7 +14,7 @@ export default function Navbar() {
     <>
     <nav className='navbar'>
       <div className='container-fluid ps-5 pe-5'>
-      <img className='nav-logo' alt='nav-logo'/>
+      <img className='nav-logo' alt='Byte' src={logo} style={{width: 97}} />
       <ul className='navbar-nav'>
         <li className='nav-item'>
           <NavLink className='nav-link' to="/transactions" >Transaction Dashboard</NavLink>

@@ -4,14 +4,19 @@ import Modal from "../../../components/Modal";
 import ModalTerminalUpload from "../../../components/ModalUploadTerminal";
 import Backdrop from "../../../components/Backdrop";
 
-export default function StatusDetails({ summary, terminals, pageStart }) {
+export default function StatusDetails({ summary, terminals, pageStart, reloadPage }) {
   const data = terminals?.terminalDetails ?? [];
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalIsOpenUpload, setModalIsOpenUpload] = useState(false);
+  const [msg, setMsg] = React.useState("");
+  const message = "";
+  let EditRow;
   function addTerminalHandler() {
     setModalIsOpen(true);
   }
-  function closeModalHandler() {
+  function closeModalHandler(message) {
+    setMsg(message);
+    message = message;
     setModalIsOpen(false)
   }
 
@@ -22,10 +27,11 @@ export default function StatusDetails({ summary, terminals, pageStart }) {
     setModalIsOpenUpload(false)
   }
 
-  function handleEdit(terminal = null){
-    console.log("Edit Click");
+  function handleEdit(terminal){
+    // <ModalTerminalUpload onCancel={closeUploadModalHandler} onConfirm={closeModalHandler} children={<></>} />
+    console.log("Edit Click", terminal);
   }
-  function handleDelete(terminal = null){
+  function handleDelete(terminal){
     console.log("Delete Click");
   }
   const columns = React.useMemo(
@@ -67,9 +73,9 @@ export default function StatusDetails({ summary, terminals, pageStart }) {
       },
       {
         Header: "Action",
-        Cell: () => {
+        Cell: (row) => {
           return <>
-           <span className="fas fa-pencil bg-warning btn btn-sm btn-info" style={{borderRadius: '50%', height: '25px', width:'30px', textAlign:'center', marginRight:'3px'}} onClick={handleEdit}></span>
+           <span className="fas fa-pencil bg-warning btn btn-sm btn-info" data-row = {row} style={{borderRadius: '50%', height: '25px', width:'30px', textAlign:'center', marginRight:'3px'}} onClick={handleEdit }></span>
            <span className="fas fa-close  bg-danger btn btn-sm btn-danger" style={{borderRadius: '50%', height: '25px', width:'30px', textAlign:'center'}} onClick={handleDelete}></span>
           </>
         },
@@ -80,6 +86,7 @@ export default function StatusDetails({ summary, terminals, pageStart }) {
   return (
     <div className="bg-white p-5 border-top-0">
       {/* <div>{summary}</div> */}
+      {message !== "" ? <p className="alert alert-info">{message}</p>:<></>  }
       <div className="mt-5">
         <div className="table-responsive table-wrapper">
           <div>

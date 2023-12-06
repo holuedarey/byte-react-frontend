@@ -16,6 +16,8 @@ export default function TerminalView() {
   const [startDate, setStartDate] = React.useState(new Date());
   const [endDate, setEndDate] = React.useState(new Date());
   const [searchParm, setSearchParam] = React.useState("");
+  const [reloadPage, setReloadPage] = React.useState(false);
+
   const postPerPage = 50;
   const pageStart = (pageNumber - 1) * postPerPage + 1;
   // const formattedDate =
@@ -41,7 +43,7 @@ export default function TerminalView() {
       `terminal/getTerminals?limit=${postPerPage}&page=${pageNumber}&startdate=${formattedStartDate}&enddate=${formattedEndDate}&search=${searchParm}`,
       setTerminal
     );
-  },[])
+  },[reloadPage])
   
 
 const Summary = () => {
@@ -140,8 +142,8 @@ const MerchantParam = <div></div>
     <div>
       <TabView 
                tabs={[
-                {name: "Terminal status details", content: StatusDetails, param: MerchantParam},
-                {name: "Terminal map overview", content: MapOverview, param: MerchantParam}
+                {name: "Terminal status details", content: StatusDetails, param: MerchantParam, pageStart:pageStart, reloadPage: reloadPage},
+                // {name: "Terminal map overview", content: MapOverview, param: MerchantParam}
                ]}
             />
     </div>

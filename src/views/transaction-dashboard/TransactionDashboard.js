@@ -22,7 +22,7 @@ export default function TransactionDashboard() {
   const [endDate, setEndDate] = React.useState(new Date());
   const [valText, setValText] = React.useState("");
   const [searchParm, setSearchParam] = React.useState("");
-  // const [terminals, setTerminals] = React.useState();
+  const [terminals, setTerminals] = React.useState();
   const [pageNumber, setPageNumber] = React.useState(1);
   const [directionValue, setDirectionValue] = React.useState("desc");
 
@@ -278,7 +278,7 @@ export default function TransactionDashboard() {
   ]);
 
   const OverviewDashboard = <Dashboard status={status} />;
-  // const TransactionStatus = <Status status={status} terminals={terminals} />;
+  const TransactionStatus = <Status status={status} terminals={terminals} />;
   const TransactionHistory = (
     <History
       history={history?.transactions}
@@ -318,11 +318,11 @@ export default function TransactionDashboard() {
               content: OverviewDashboard,
               param: dashboardParam,
             },
-            // {
-            //   name: "Transaction Status",
-            //   content: TransactionStatus,
-            //   param: statusParam,
-            // },
+            {
+              name: "Transaction Status",
+              content: TransactionStatus,
+              param: statusParam,
+            },
             {
               name: "Transaction History",
               content: TransactionHistory,
