@@ -7,7 +7,7 @@ body{
 
   .btn {
     font-size: 14px;
-    border: 1px solid #707070;
+    border: none;
     background-color: #016AA7;
     color: #ffffff;
     height: 40px;

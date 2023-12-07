@@ -265,10 +265,6 @@ export default function TransactionDashboard() {
       'transactions/failure-reasons',
       setFailedReason
     );
-    // console.log(
-    //   `transactions/history?limit=${postPerPage}&page=${pageNumber}&startdate=${formattedStartDate}&enddate=${formattedEndDate}$search=${searchParm}`
-    // );
-    // HandleGetApi("terminals/stats", setTerminals);
   }, [
     formattedStartDate,
     formattedEndDate,
@@ -278,7 +274,6 @@ export default function TransactionDashboard() {
   ]);
 
   const OverviewDashboard = <Dashboard status={status} />;
-  const TransactionStatus = <Status status={status} terminals={terminals} />;
   const TransactionHistory = (
     <History
       history={history?.transactions}
@@ -317,11 +312,6 @@ export default function TransactionDashboard() {
               name: "Overview Dashboard",
               content: OverviewDashboard,
               param: dashboardParam,
-            },
-            {
-              name: "Transaction Status",
-              content: TransactionStatus,
-              param: statusParam,
             },
             {
               name: "Transaction History",
