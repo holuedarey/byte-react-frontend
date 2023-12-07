@@ -1,4 +1,5 @@
 import React from "react";
+import "./MerchantManagement.css"
 import Navbar from "../../components/navbar/Navbar";
 import DropdownMenu from "../../components/DropdownMenu";
 import MerchantView from "./view-merchants/MerchantView";
@@ -18,13 +19,16 @@ export default function MerchantManagement() {
     <div>
       <Navbar />
       <div className="container-fluid p-5">
-        <DropdownMenu
+        {/* <DropdownMenu
           label="Merchant Management"
           items={[
             { name: "View Terminal", content: Terminal },
             { name: "View Merchant", content: Merchant },
           ]}
-        />
+        /> */}
+        <div className="mt-4">
+        <TerminalView />
+        </div>
       </div>
     </div>
   );

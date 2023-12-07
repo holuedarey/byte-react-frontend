@@ -1,52 +1,79 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import avatar from '../../images/avatar.jpg';
-import logo from '../../images/logo.png';
-import './Navbar.css'
+import React from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import avatar from "../../images/avatar.jpg";
+import logo from "../../images/logo.png";
+import logout from "../../images/logout-icon.svg";
+import "./Navbar.css";
 
 export default function Navbar() {
-  const data = JSON.parse(localStorage.getItem('user'));
-  let username = "Guest"
-  if(data){
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = React.useState(false);
+  const data = JSON.parse(localStorage.getItem("user"));
+  let username = "Guest";
+  if (data) {
     username = data?.username;
   }
+
+  const openDropdown = () => {
+    console.log("open dropdown");
+    setIsOpen((prevState) => !prevState);
+  };
+
+  const handleSignout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
   return (
     <>
-    <nav className='navbar'>
-      <div className='container-fluid ps-5 pe-5'>
-      <img className='nav-logo' alt='Byte' src={logo} style={{width: 97}} />
-      <ul className='navbar-nav'>
-        <li className='nav-item'>
-          <NavLink className='nav-link' to="/transactions" >Transaction Dashboard</NavLink>
-        </li>
-        <li className='nav-item'>
-          <NavLink className='nav-link' to="/merchant" >Merchant Management</NavLink>
-        </li>
-        {/* <li className='nav-item'>
-          <NavLink className='nav-link' to="/settlement">Settlement</NavLink>
-        </li>
-        <li className='nav-item'>
-          <NavLink className='nav-link' to="/dispute">Dispute Resolution</NavLink>
-        </li> */}
-        <li className='nav-item'>
-          <NavLink className='nav-link' to="/config">Configuration</NavLink>
-        </li>
-      </ul>
-      <div className='user-pill'>
-        <div className='row pill-content'>
-          <div className='col-2'>
-            <img className='pill-img' src={avatar} alt='img'/>
+      <nav className="navbar">
+        <div className="container-fluid ps-5 pe-5">
+          <img
+            className="nav-logo"
+            alt="Byte"
+            src={logo}
+            style={{ width: 97 }}
+          />
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/transactions">
+                Transaction Dashboard
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/merchant">
+                Terminal Management
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/">
+                User Management
+              </NavLink>
+            </li>
+          </ul>
+          <div className="user-pill" onClick={openDropdown}>
+            <div className="pill-content">
+              <img className="pill-img" src={avatar} alt="img" />
+              <p className="pill-text m-0">{username}</p>
+              <div className="pill-icon">
+                {isOpen ? (
+                  <i className="fa-solid fa-angle-down"></i>
+                ) : (
+                  <i className="fa-solid fa-angle-right"></i>
+                )}
+              </div>
+            </div>
           </div>
-          <div className='col-8 ps-1'>
-            <p className='pill-text'>
-              {username}
-            </p>
+          <div className={isOpen ? "user-menu" : "user-menu hide"}>
+            <ul>
+              <li onClick={handleSignout}>
+                <img className="logout-img" src={logout} alt="logout" />
+                Logout
+              </li>
+            </ul>
           </div>
-          <div className='col-2 pill-icon'><i className="fa-solid fa-angle-right"></i></div>
         </div>
-      </div>
-      </div>
-    </nav>
+      </nav>
     </>
-  )
+  );
 }
