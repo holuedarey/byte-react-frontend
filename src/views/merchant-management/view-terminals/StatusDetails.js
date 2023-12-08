@@ -9,11 +9,7 @@ import TerminalEditForm from "./TerminalEditForm";
 import httpClient from "../../../helpers/RequestInterceptor";
 import HandleGetApi from "../../../components/handleApi/HandleGetApi";
 
-export default function StatusDetails({
-  summary,
-  pageStart,
-  reloadPage,
-}) {
+export default function StatusDetails({ summary }) {
   const [msg, setMsg] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -21,6 +17,31 @@ export default function StatusDetails({
   const [selectedRowData, setSelectedRowData] = useState({});
   const [terminals, setTerminal] = React.useState([]);
   const data = terminals?.terminalDetails ?? [];
+  const [pageNumber, setPageNumber] = React.useState(1);
+  const [startDate, setStartDate] = React.useState(new Date());
+  const [endDate, setEndDate] = React.useState(new Date());
+  const [searchParm, setSearchParam] = React.useState("");
+
+  const postPerPage = 50;
+  const pageStart = (pageNumber - 1) * postPerPage + 1;
+  // const formattedDate =
+  //   date.getFullYear() +
+  //   "-" +
+  //   parseInt(date.getMonth() + 1) +
+  //   "-" +
+  //   date.getDate();
+  const formattedStartDate =
+    startDate.getFullYear() +
+    "-" +
+    parseInt(startDate.getMonth() + 1) +
+    "-" +
+    startDate.getDate();
+  const formattedEndDate =
+    endDate.getFullYear() +
+    "-" +
+    parseInt(endDate.getMonth() + 1) +
+    "-" +
+    endDate.getDate();
   // const [enabled, setEnabled] = useState(false);
 
   // console.log("term", terminals, data)
@@ -45,6 +66,10 @@ export default function StatusDetails({
     setIsEditModalOpen(true);
   };
 
+  const fetchData = () => {
+    HandleGetApi(`terminal/getTerminals?limit=${postPerPage}&page=${pageNumber}&startdate=${formattedStartDate}&enddate=${formattedEndDate}&search=${searchParm}`, setTerminal);
+  };
+
   const toggleStatus = (rowData) => {
     const updatedRowData = { ...rowData, enabled: !rowData.enabled };
     // console.log("updated Row", updatedRowData);
@@ -58,7 +83,7 @@ export default function StatusDetails({
         },
       })
       .then((response) => {
-        console.log("Status toggled successfully:", response);
+        fetchData();
       })
       .catch((error) => {
         console.error("Error toggling status:", error);
@@ -144,10 +169,7 @@ export default function StatusDetails({
   }, [msg]);
 
   React.useEffect(() => {
-    HandleGetApi(
-      `terminal/getTerminals`,
-      setTerminal
-    );
+    fetchData();
   }, []);
 
   return (
@@ -191,6 +213,7 @@ export default function StatusDetails({
                     message={msg}
                     setMessage={setMsg}
                     selectedRowData={selectedRowData}
+                    fetchData={fetchData}
                   />
                 }
               />

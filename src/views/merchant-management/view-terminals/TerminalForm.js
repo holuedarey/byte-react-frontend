@@ -77,7 +77,6 @@ export default function TerminalForm({
   };
 
   const onSubmit = (payload) => {
-    console.log("payload", payload);
     const url = "terminal/assign/single?merchantCode=4B755C15C4B";
     httpClient
       .post(url, payload, {

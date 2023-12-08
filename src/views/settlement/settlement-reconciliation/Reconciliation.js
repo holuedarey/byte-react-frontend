@@ -16,8 +16,6 @@ export default function Reconciliation() {
   const summary = <ReconciliationSummary />;
   const betaSummary = <ReconciliationBetaSummary />;
 
-  console.log("data", data);
-
   return (
     <div>
       <TabView
