@@ -38,7 +38,7 @@ export default function TerminalView() {
     );
   }, [reloadPage]);
 
-  console.log("hguyu", terminals);
+  // console.log("hguyu", terminals);
   const StatusDetails = <Status terminals={terminals} pageStart={pageStart} />;
 
   const MerchantParam = <div></div>;

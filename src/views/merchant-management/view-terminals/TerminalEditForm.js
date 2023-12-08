@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import httpClient from "../../../helpers/RequestInterceptor";
 
-export default function TerminalForm({
+export default function TerminalEditForm({
   isOpen,
   onClose,
   message,
@@ -21,7 +21,7 @@ export default function TerminalForm({
       .email("Please enter a valid email")
       .required("Email is required"),
     serialNumber: yup.string().required("Serial Number is required"),
-    // firmwareVersion: yup.string().required("Firmware Version is required"),
+    firmwareVersion: yup.string().required("Firmware Version is required"),
     physicalAddress: yup.string().required("Physical Address is required"),
     postalAddress: yup.string().required("Postal Address is required"),
     phone: yup.string().required("Phone Number is required"),
@@ -68,19 +68,32 @@ export default function TerminalForm({
     register,
     handleSubmit,
     formState: { errors },
+    setValue, // Include the setValue function from react-hook-form
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  React.useEffect(() => {
+    // Set default values from selectedRowData after form initialization
+    if (selectedRowData) {
+      Object.keys(selectedRowData).forEach((key) => {
+        setValue(key, selectedRowData[key]);
+      });
+      setEnabled(selectedRowData.enabled); // Set enabled state from selectedRowData
+    }
+  }, [selectedRowData, setValue]);
 
   const toggleEnabled = () => {
     setEnabled(!enabled);
   };
 
   const onSubmit = (payload) => {
-    console.log("payload", payload);
-    const url = "terminal/assign/single?merchantCode=4B755C15C4B";
+    const terminalID = selectedRowData.terminalId;
+    // console.log(terminalID, payload);
+    const url = `terminal/updateTerminal/${terminalID}`;
+
     httpClient
-      .post(url, payload, {
+      .put(url, payload, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
@@ -88,7 +101,7 @@ export default function TerminalForm({
       })
       .then((response) => {
         console.log("response", response);
-        setMessage("Terminal Created Successfully");
+        setMessage("Terminal Updated Successfully");
         onClose();
       })
       .catch(function (error) {
@@ -98,10 +111,11 @@ export default function TerminalForm({
       });
   };
 
-  if (!isOpen) return null;
+  if (!isOpen || !selectedRowData) return null; // Ensure there's selectedRowData before rendering
+
   return (
     <form className="terminal-form" onSubmit={handleSubmit(onSubmit)}>
-      <h6 className="text-center">Create A New Terminal</h6>
+      <h6 className="text-center">Edit Terminal</h6>
       <hr />
       <div className="row">
         {/* Email */}
@@ -113,7 +127,7 @@ export default function TerminalForm({
             type="text"
             className={`form-control ${errors.email ? "is-invalid" : ""}`}
             id="email"
-            {...register("email")}
+            {...register("email", { defaultValue: selectedRowData.email })}
           />
           {errors.email && (
             <div className="invalid-feedback">{errors.email.message}</div>
@@ -129,7 +143,9 @@ export default function TerminalForm({
             type="text"
             className={`form-control ${errors.terminalId ? "is-invalid" : ""}`}
             id="terminalId"
-            {...register("terminalId")}
+            {...register("terminalId", {
+              defaultValue: selectedRowData.terminalId,
+            })}
           />
           {errors.terminalId && (
             <div className="invalid-feedback">{errors.terminalId.message}</div>
@@ -147,7 +163,9 @@ export default function TerminalForm({
               errors.serialNumber ? "is-invalid" : ""
             }`}
             id="serialNumber"
-            {...register("serialNumber")}
+            {...register("serialNumber", {
+              defaultValue: selectedRowData.serialNumber,
+            })}
           />
           {errors.serialNumber && (
             <div className="invalid-feedback">
@@ -163,15 +181,18 @@ export default function TerminalForm({
           </label>
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${
+              errors.firmwareVersion ? "is-invalid" : ""
+            }`}
+            defaultValue={selectedRowData.firmwareVerion}
             id="firmwareVersion"
-            // {...register("firmwareVersion")}
+            {...register("firmwareVersion")}
           />
-          {/* {errors.firmwareVersion && (
+          {errors.firmwareVersion && (
             <div className="invalid-feedback">
               {errors.firmwareVersion.message}
             </div>
-          )} */}
+          )}
         </div>
 
         {/* Physical Address */}
@@ -185,7 +206,9 @@ export default function TerminalForm({
               errors.physicalAddress ? "is-invalid" : ""
             }`}
             id="physicalAddress"
-            {...register("physicalAddress")}
+            {...register("physicalAddress", {
+              defaultValue: selectedRowData.physicalAddress,
+            })}
           />
           {errors.physicalAddress && (
             <div className="invalid-feedback">
@@ -205,7 +228,9 @@ export default function TerminalForm({
               errors.postalAddress ? "is-invalid" : ""
             }`}
             id="postalAddress"
-            {...register("postalAddress")}
+            {...register("postalAddress", {
+              defaultValue: selectedRowData.postalAddress,
+            })}
           />
           {errors.postalAddress && (
             <div className="invalid-feedback">
@@ -223,7 +248,7 @@ export default function TerminalForm({
             type="text"
             className={`form-control ${errors.phone ? "is-invalid" : ""}`}
             id="phone"
-            {...register("phone")}
+            {...register("phone", { defaultValue: selectedRowData.phone })}
           />
           {errors.phone && (
             <div className="invalid-feedback">{errors.phone.message}</div>
@@ -276,7 +301,7 @@ export default function TerminalForm({
       </div>
       {/* Submit button */}
       <button type="submit" className="btn btn-primary">
-        Add Terminal
+        Edit Terminal
       </button>
 
       {/* Cancel button */}
