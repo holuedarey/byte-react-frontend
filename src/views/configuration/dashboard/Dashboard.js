@@ -11,7 +11,7 @@ export default function Dashboard() {
   const [days, setDays] = React.useState(0);
   const  totalTimeInSec = (days * 24 * 60 * 60) + (hours * 60 * 60) + (minutes * 60) + (seconds * 1) ;
 
-  console.log("dddd", hours, days, minutes, seconds)
+  // console.log("dddd", hours, days, minutes, seconds)
 
   const url = "config/online-terminal-time";
   const data = { online_seconds: totalTimeInSec };
@@ -23,7 +23,7 @@ export default function Dashboard() {
     e.preventDefault();
     HandlePostApi(url, data).then((result) => {
         const { error, message } = result;
-        console.log("result", result, message)
+        // console.log("result", result, message)
         if (error) {
           setErr(true);
           setMsg(message);
@@ -38,10 +38,10 @@ export default function Dashboard() {
 
   const configActiveTerm = (e) => {
     e.preventDefault();
-    console.log("dddd", hours)
+    // console.log("dddd", hours)
     HandlePostApi(activeUrl, activeData).then((result) => {
         const { error, message } = result;
-        console.log("result", message)
+        // console.log("result", message)
         if (message) {
           setErr(true);
           setMsg(message.message);

@@ -16,7 +16,6 @@ export default function History({
   nextPage,
   prevPage,
 }) {
-  console.log("failure Reason :", reasons);
   var abbreviate = require("number-abbreviate");
   const columns = React.useMemo(
     () => [

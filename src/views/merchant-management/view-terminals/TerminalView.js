@@ -36,7 +36,7 @@ export default function TerminalView() {
       `terminal/getTerminals?limit=${postPerPage}&page=${pageNumber}&startdate=${formattedStartDate}&enddate=${formattedEndDate}&search=${searchParm}`,
       setTerminal
     );
-  }, [reloadPage]);
+  }, []);
 
   // console.log("hguyu", terminals);
   const StatusDetails = <Status terminals={terminals} pageStart={pageStart} />;

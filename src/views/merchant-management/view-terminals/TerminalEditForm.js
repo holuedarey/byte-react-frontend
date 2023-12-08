@@ -10,21 +10,22 @@ export default function TerminalEditForm({
   message,
   setMessage,
   selectedRowData,
+  fetchData,
 }) {
-  const [enabled, setEnabled] = React.useState(false);
+  const [enabled, setEnabled] = React.useState(selectedRowData.enabled);
 
   const schema = yup.object().shape({
     terminalId: yup.string().required("Terminal Id is required"),
     enabled: yup.boolean().required("Status is required").default(enabled),
-    email: yup
-      .string()
-      .email("Please enter a valid email")
-      .required("Email is required"),
+    email: yup.string().email("Please enter a valid email"),
+    // .required("Email is required"),
     serialNumber: yup.string().required("Serial Number is required"),
-    firmwareVersion: yup.string().required("Firmware Version is required"),
+    firmwareVersion: yup.string(),
+    // .required("Firmware Version is required"),
     physicalAddress: yup.string().required("Physical Address is required"),
     postalAddress: yup.string().required("Postal Address is required"),
-    phone: yup.string().required("Phone Number is required"),
+    phone: yup.string(),
+    // .required("Phone Number is required"),
     // logoUrl: yup.string().required("LogoUrl is required"),
     // merchantName: yup.string().required("Merchant Name is required"),
     // merchantId: yup.string().required("Merchant Id is required"),
@@ -84,12 +85,12 @@ export default function TerminalEditForm({
   }, [selectedRowData, setValue]);
 
   const toggleEnabled = () => {
-    setEnabled(!enabled);
+    setEnabled((prevEnabled) => !prevEnabled);
+    setValue("enabled", !enabled);
   };
 
   const onSubmit = (payload) => {
-    const serialNumber = selectedRowData.serialNumber;
-    // console.log(serialNumber, payload);
+    const serialNumber = selectedRowData.serialNumber
     const url = `terminal/updateTerminal/${serialNumber}`;
 
     httpClient
@@ -100,9 +101,10 @@ export default function TerminalEditForm({
         },
       })
       .then((response) => {
-        console.log("response", response);
+        // console.log("response", response);
         setMessage("Terminal Updated Successfully");
         onClose();
+        fetchData();
       })
       .catch(function (error) {
         console.log("Error processing request", error);
