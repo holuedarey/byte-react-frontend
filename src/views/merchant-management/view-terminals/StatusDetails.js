@@ -7,6 +7,8 @@ import Modal from "../../../components/modal/Modal";
 import TerminalForm from "./TerminalForm";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TerminalEditForm from "./TerminalEditForm";
+import httpClient from "../../../helpers/RequestInterceptor";
 
 export default function StatusDetails({
   summary,
@@ -19,15 +21,17 @@ export default function StatusDetails({
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalIsOpenUpload, setModalIsOpenUpload] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [action, setAction] = useState("add");
   const [selectedRowData, setSelectedRowData] = useState({});
+  const [enabled, setEnabled] = useState(false);
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-  const closeModal = () => setIsModalOpen(false);
   const message = "";
-  let EditRow;
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setIsEditModalOpen(false);
+  };
 
   const addTerminalHandler = () => {
     setIsModalOpen(true);
@@ -50,14 +54,34 @@ export default function StatusDetails({
 
   const handleEditData = (row) => {
     setSelectedRowData(row);
-    setIsModalOpen(true);
+    setIsEditModalOpen(true);
     setAction("update");
+  };
+
+  const toggleStatus = (rowData) => {
+    const updatedRowData = { ...rowData, enabled: !rowData.enabled }; 
+    // console.log("updated Row", updatedRowData);
+    const url = `terminal/updateTerminal/${rowData.terminalId}`;
+
+    httpClient
+      .put(url, updatedRowData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log("Status toggled successfully:", response);
+      })
+      .catch((error) => {
+        console.error("Error toggling status:", error);
+      });
   };
 
   const columns = React.useMemo(
     () => [
       {
-        Header: "#",
+        Header: "S/N",
         Cell: (row) => {
           return <div>{row.row.index + pageStart}</div>;
         },
@@ -82,30 +106,36 @@ export default function StatusDetails({
       {
         Header: "Status",
         Cell: (row) => {
-          const statusCehck = data[row.row.index]?.enabled;
+          const rowData = data[row.row.index];
+          const statusCheck = rowData?.enabled;
+
+          const handleStatusToggle = () => {
+            toggleStatus(rowData);
+          };
+
           return (
             <>
               <div className="form-check form-switch">
                 <label
                   className="form-check-label"
-                  htmlFor="flexSwitchCheckChecked"
+                  htmlFor={`enabled-${row.row.index}`}
                 >
-                  {statusCehck ? "Enabled" : "Disabled"}
+                  {statusCheck ? "Enabled" : "Disabled"}
                 </label>
                 <input
                   className="form-check-input"
                   type="checkbox"
                   name="enabled"
-                  role="switch"
-                  id="enabled"
-                  defaultChecked={statusCehck}
-                  disabled={true}
+                  id={`enabled-${row.row.index}`}
+                  checked={statusCheck}
+                  onChange={handleStatusToggle}
                 />
               </div>
             </>
           );
         },
       },
+
       {
         Header: "",
         accessor: "Action",
@@ -120,7 +150,7 @@ export default function StatusDetails({
   );
 
   React.useEffect(() => {
-    if (msg.trim().length > 0) {
+    if (msg?.trim().length > 0) {
       toast(msg);
       setMsg(""); // Clear the message after displaying the toast
     }
@@ -151,6 +181,21 @@ export default function StatusDetails({
                     onClose={closeModal}
                     message={msg}
                     setMessage={setMsg}
+                  />
+                }
+              />
+            )}
+
+            {isEditModalOpen && (
+              <Modal
+                isOpen={isEditModalOpen}
+                onClose={closeModal}
+                content={
+                  <TerminalEditForm
+                    isOpen={isEditModalOpen}
+                    onClose={closeModal}
+                    message={msg}
+                    setMessage={setMsg}
                     selectedRowData={selectedRowData}
                   />
                 }
@@ -161,6 +206,8 @@ export default function StatusDetails({
               <ModalTerminalUpload
                 onCancel={closeUploadModalHandler}
                 onConfirm={closeModalHandler}
+                message={msg}
+                setMessage={setMsg}
                 children={<></>}
               />
             )}

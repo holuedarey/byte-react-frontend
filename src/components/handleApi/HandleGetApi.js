@@ -11,7 +11,7 @@ export default function HandlePostApi(url, setStateFunc) {
     })
     .then((response) => {
       setStateFunc(response.data.data.data || response.data.data);
-      console.log(response.data.data.data)
+      // console.log(response.data.data.data)
     })
     .catch(function (error) {
       console.log(error);
