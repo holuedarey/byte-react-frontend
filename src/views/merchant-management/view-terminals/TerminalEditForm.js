@@ -90,7 +90,7 @@ export default function TerminalEditForm({
   };
 
   const onSubmit = (payload) => {
-    const serialNumber = selectedRowData.serialNumber;
+    const serialNumber = selectedRowData.serialNumber
     const url = `terminal/updateTerminal/${serialNumber}`;
 
     httpClient
