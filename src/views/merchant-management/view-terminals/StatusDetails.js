@@ -61,7 +61,7 @@ export default function StatusDetails({
   const toggleStatus = (rowData) => {
     const updatedRowData = { ...rowData, enabled: !rowData.enabled }; 
     // console.log("updated Row", updatedRowData);
-    const url = `terminal/updateTerminal/${rowData.terminalId}`;
+    const url = `terminal/updateTerminal/${rowData.serialNumber}`;
 
     httpClient
       .put(url, updatedRowData, {

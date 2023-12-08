@@ -88,9 +88,9 @@ export default function TerminalEditForm({
   };
 
   const onSubmit = (payload) => {
-    const terminalID = selectedRowData.terminalId;
-    // console.log(terminalID, payload);
-    const url = `terminal/updateTerminal/${terminalID}`;
+    const serialNumber = selectedRowData.serialNumber;
+    // console.log(serialNumber, payload);
+    const url = `terminal/updateTerminal/${serialNumber}`;
 
     httpClient
       .put(url, payload, {
