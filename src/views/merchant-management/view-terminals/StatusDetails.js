@@ -1,67 +1,54 @@
 import React, { useState } from "react";
 import Table from "../../../components/Table";
-import ModalForm from "../../../components/ModalForm";
 import ModalTerminalUpload from "../../../components/ModalUploadTerminal";
-import Backdrop from "../../../components/Backdrop";
 import Modal from "../../../components/modal/Modal";
 import TerminalForm from "./TerminalForm";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TerminalEditForm from "./TerminalEditForm";
 import httpClient from "../../../helpers/RequestInterceptor";
+import HandleGetApi from "../../../components/handleApi/HandleGetApi";
 
 export default function StatusDetails({
   summary,
-  terminals,
   pageStart,
   reloadPage,
 }) {
   const [msg, setMsg] = useState("");
-  const data = terminals?.terminalDetails ?? [];
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [modalIsOpenUpload, setModalIsOpenUpload] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [action, setAction] = useState("add");
+  const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState({});
-  const [enabled, setEnabled] = useState(false);
+  const [terminals, setTerminal] = React.useState([]);
+  const data = terminals?.terminalDetails ?? [];
+  // const [enabled, setEnabled] = useState(false);
 
+  // console.log("term", terminals, data)
   const message = "";
 
   const closeModal = () => {
     setIsModalOpen(false);
     setIsEditModalOpen(false);
+    setIsBulkModalOpen(false);
   };
 
   const addTerminalHandler = () => {
     setIsModalOpen(true);
-    setAction("add");
-  };
-
-  const closeModalHandler = (message) => {
-    setMsg(message);
-    message = message;
-    setModalIsOpen(false);
   };
 
   const uploadTerminalHandler = () => {
-    setModalIsOpenUpload(true);
-  };
-
-  const closeUploadModalHandler = () => {
-    setModalIsOpenUpload(false);
+    setIsBulkModalOpen(true);
   };
 
   const handleEditData = (row) => {
     setSelectedRowData(row);
     setIsEditModalOpen(true);
-    setAction("update");
   };
 
   const toggleStatus = (rowData) => {
-    const updatedRowData = { ...rowData, enabled: !rowData.enabled }; 
+    const updatedRowData = { ...rowData, enabled: !rowData.enabled };
     // console.log("updated Row", updatedRowData);
-    const url = `terminal/updateTerminal/${rowData.terminalId}`;
+    const url = `terminal/updateTerminal/${rowData.serialNumber}`;
 
     httpClient
       .put(url, updatedRowData, {
@@ -156,6 +143,13 @@ export default function StatusDetails({
     }
   }, [msg]);
 
+  React.useEffect(() => {
+    HandleGetApi(
+      `terminal/getTerminals`,
+      setTerminal
+    );
+  }, []);
+
   return (
     <div className="status-details bg-white p-4 border-top-0">
       {/* <div>{summary}</div> */}
@@ -201,18 +195,19 @@ export default function StatusDetails({
                 }
               />
             )}
-
-            {modalIsOpenUpload && (
-              <ModalTerminalUpload
-                onCancel={closeUploadModalHandler}
-                onConfirm={closeModalHandler}
-                message={msg}
-                setMessage={setMsg}
-                children={<></>}
+            {isBulkModalOpen && (
+              <Modal
+                isOpen={isBulkModalOpen}
+                onClose={closeModal}
+                content={
+                  <ModalTerminalUpload
+                    isOpen={isBulkModalOpen}
+                    onClose={closeModal}
+                    message={msg}
+                    setMessage={setMsg}
+                  />
+                }
               />
-            )}
-            {modalIsOpenUpload && (
-              <Backdrop onCancel={closeUploadModalHandler} />
             )}
           </div>
           <Table columns={columns} data={data} />

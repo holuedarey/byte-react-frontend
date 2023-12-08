@@ -2,7 +2,7 @@ import AppData from "../../config/appData.json";
 import axios from "axios";
 import httpClient from "../../helpers/RequestInterceptor";
 
-export default function HandlePostApi(url, setStateFunc) {
+export default function HandleGetApi(url, setStateFunc) {
   httpClient.get(AppData.BASE_URL + url, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,

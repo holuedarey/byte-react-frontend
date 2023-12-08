@@ -1,22 +1,28 @@
 import React, { useState } from "react";
 import httpClient from "../helpers/RequestInterceptor";
 
-function ModalTerminalUpload({onCancel, message, setMessage}) {
-  function cancelHandler() {
-    onCancel();
-  }
+export default function ModalTerminalUpload({
+  isOpen,
+  onClose,
+  message,
+  setMessage,
+}) {
   const [selectedFile, setSelectedFile] = useState();
   const [isSelected, setIsFilePicked] = useState(false);
 
   const [err, setErr] = React.useState(false);
-//   const [msg, setMsg] = React.useState("");
+  //   const [msg, setMsg] = React.useState("");
 
   const url = "terminal/assign/bulk?merchantCode=4B755C15C4B";
   //handle submit updates
-  function handleChange(event) {
+  const handleChange = (event) => {
     setSelectedFile(event.target.files[0]);
     setIsFilePicked(true);
-  }
+  };
+
+  //   const cancelHandler = () => {
+  //     onCancel();
+  //   };
 
   const addTerminalSubmit = (e) => {
     e.preventDefault();
@@ -30,90 +36,87 @@ function ModalTerminalUpload({onCancel, message, setMessage}) {
         },
       })
       .then((response) => {
-        const { error, message } = response;
+        const { error, data } = response?.data || {};
+
         if (error) {
           setErr(true);
-          setMessage(message[0]);
+          setMessage(data?.message || "Error uploading terminals.");
           return;
         }
-        console.log("response", response?.data?.responseMessage);
-        const setMessage = `Terminal Upload | ${
-          response?.data?.data?.successful?.length
-            ? "Successful : 0" + response?.data?.data?.successful?.length
-            : "Successful : 0"
-        }, ${
-          response?.data?.data?.failed?.length
-            ? "Failed : " +
-              response?.data?.data?.failed?.length +
-              ", These Record(s) Already Exist"
-            : "Failed : 0"
-        }`;
-        setMessage(setMessage);
-        // cancelHandler()
+
+        const successCount = data?.successful?.length || 0;
+        const failedCount = data?.failed?.length || 0;
+
+        const uploadMessage = `Terminal Upload | Successful: ${successCount}, Failed: ${failedCount}`;
+
+        setMessage(uploadMessage);
+        onClose();
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((error) => {
+        console.error("Error uploading terminals:", error);
+        setMessage(error?.response?.data?.responseMessage);
+        onClose();
       });
   };
 
+  if (!isOpen) return null;
+
   return (
-    <div className="modal-new">
-      <div>
-        {
-          <div className="row ms-1">
-            <form onSubmit={addTerminalSubmit}>
-              <h6 className="text-center">Upload Bulk Terminal</h6>
-              <hr />
-              {setMessage !== "" ? <p className="alert alert-info">{setMessage}</p> : <></>}
-              {/* {err !== "" ? <p className="alert alert-danger" >{err}</p>  : <></>}  */}
-              {isSelected ? (
-                <div>
-                  <p>Filename: {selectedFile.name}</p>
-                  <p>Filetype: {selectedFile.type}</p>
-                  <p>Size in bytes: {selectedFile.size}</p>
-                  <p>
-                    lastModifiedDate:{" "}
-                    {selectedFile.lastModifiedDate.toLocaleDateString()}
-                  </p>
-                </div>
-              ) : (
-                <p>Select a file to show details</p>
-              )}
-              <div className="row mb-1 mt-1">
-                <div className="col">
-                  <div className="">
-                    <label htmlFor="terminalId" className="form-label">
-                      Select File:
-                    </label>
-                    <input
-                      type="file"
-                      className="form-control"
-                      id="file"
-                      name="file"
-                      onChange={(e) => handleChange(e)}
-                    />
-                    {/* {validation.terminalId != null && <p className="text-danger">{validation.terminalId}</p>}
+    <>
+      <div className="row ms-1">
+        <form onSubmit={addTerminalSubmit}>
+          <h6 className="text-center">Upload Bulk Terminal</h6>
+          <hr />
+          {message !== "" ? (
+            <p className="alert alert-info">{message}</p>
+          ) : (
+            <></>
+          )}
+          {/* {err !== "" ? <p className="alert alert-danger" >{err}</p>  : <></>}  */}
+          {isSelected ? (
+            <div>
+              <p>Filename: {selectedFile.name}</p>
+              <p>Filetype: {selectedFile.type}</p>
+              <p>Size in bytes: {selectedFile.size}</p>
+              <p>
+                lastModifiedDate:{" "}
+                {selectedFile.lastModifiedDate.toLocaleDateString()}
+              </p>
+            </div>
+          ) : (
+            <p>Select a file to show details</p>
+          )}
+          <div className="row mb-1 mt-1">
+            <div className="col">
+              <div className="">
+                <label htmlFor="terminalId" className="form-label">
+                  Select File:
+                </label>
+                <input
+                  type="file"
+                  className="form-control"
+                  id="file"
+                  name="file"
+                  onChange={(e) => handleChange(e)}
+                />
+                {/* {validation.terminalId != null && <p className="text-danger">{validation.terminalId}</p>}
                                 {validation.terminalId && console.log(validation)} */}
-                  </div>
-                </div>
               </div>
-              <hr />
-              <button
-                type="submit"
-                className="btn btn-primary"
-                disabled={!isSelected}
-              >
-                Upload Terminal
-              </button>
-            </form>
+            </div>
           </div>
-        }
+          <hr />
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={!isSelected}
+          >
+            Upload Terminal
+          </button>
+        </form>
       </div>
-      <button className="btn btn--alt" onClick={cancelHandler}>
+      <button className="btn btn--alt" onClick={onClose}>
         Cancel
       </button>
-    </div>
+    </>
   );
 }
-
-export default ModalTerminalUpload;

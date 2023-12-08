@@ -11,7 +11,9 @@ export default function TerminalEditForm({
   setMessage,
   selectedRowData,
 }) {
-  const [enabled, setEnabled] = React.useState(false);
+  const [enabled, setEnabled] = React.useState(selectedRowData.enabled);
+
+  console.log("status", enabled);
 
   const schema = yup.object().shape({
     terminalId: yup.string().required("Terminal Id is required"),
@@ -84,13 +86,13 @@ export default function TerminalEditForm({
   }, [selectedRowData, setValue]);
 
   const toggleEnabled = () => {
-    setEnabled(!enabled);
+    setEnabled((prevEnabled) => !prevEnabled);
+    setValue("enabled", !enabled);
   };
 
   const onSubmit = (payload) => {
-    const terminalID = selectedRowData.terminalId;
-    // console.log(terminalID, payload);
-    const url = `terminal/updateTerminal/${terminalID}`;
+    const serialNumber = selectedRowData.serialNumber;
+    const url = `terminal/updateTerminal/${serialNumber}`;
 
     httpClient
       .put(url, payload, {
