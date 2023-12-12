@@ -9,13 +9,20 @@ import httpClient from "../../helpers/RequestInterceptor";
 import successIcon from "../../images/successful-transaction.svg";
 import pendingIcon from "../../images/pending-transaction.svg";
 import totalIcon from "../../images/all-transaction.svg";
+import RoleUpdateForm from "./RoleUpdateForm";
+import RoleDeleteForm from "./RoleDeleteForm";
 
 export default function UserList() {
   const [openUserForm, setOpenUserForm] = useState(false);
   const [message, setMessage] = useState("");
   const [users, setUsers] = useState({});
   const [summary, setSummary] = useState({});
+  const [editRole, setEditRole] = useState(false);
+  const [deleteRole, setDeleteRole] = useState(false);
+  const [selectedUser, setSelectedUser] = useState({});
   const data = JSON.parse(localStorage.getItem("user"));
+
+  // console.log("users", users);
 
   const hasApprovalPermission = data.permissions.includes("approval");
 
@@ -27,6 +34,8 @@ export default function UserList() {
 
   const closeModal = () => {
     setOpenUserForm(false);
+    setEditRole(false);
+    setDeleteRole(false);
   };
 
   const fetchData = () => {
@@ -37,10 +46,17 @@ export default function UserList() {
     HandleGetApi(`users/summary`, setSummary);
   };
 
-  console.log("summary", summary);
+  const handleEditRole = (userRow) => {
+    setEditRole(true);
+    setSelectedUser(userRow);
+  };
+
+  const handleDeleteRole = (userRow) => {
+    setDeleteRole(true);
+    setSelectedUser(userRow);
+  };
 
   const toggleStatus = (userEmail) => {
-    console.log("email", userEmail);
     const url = "users/activate-deactivate";
     const payload = { email: userEmail };
 
@@ -51,9 +67,8 @@ export default function UserList() {
           "Content-Type": "application/json",
         },
       })
-      .then((response) => {
-        console.log("res", response);
-        // fetchData();
+      .then(() => {
+        fetchData();
       })
       .catch((error) => {
         console.error("Error toggling status:", error);
@@ -127,15 +142,28 @@ export default function UserList() {
           );
         },
       },
-
       {
         Header: "",
         accessor: "Action",
-        Cell: ({ row }) => (
-          <div>
-            <i className="fas fa-edit"></i>
-          </div>
-        ),
+        Cell: (row) => {
+          const userRow = row.row.original;
+          return (
+            <div>
+              <button
+                className="user-action"
+                onClick={() => handleEditRole(userRow)}
+              >
+                <i className="fas fa-edit"></i>
+              </button>
+              <button
+                className="user-action"
+                onClick={() => handleDeleteRole(userRow)}
+              >
+                <i className="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          );
+        },
       },
     ],
     []
@@ -201,6 +229,34 @@ export default function UserList() {
           }
         />
       )}
+      {editRole && (
+        <Modal
+          isOpen={editRole}
+          onClose={closeModal}
+          content={
+            <RoleUpdateForm
+              onClose={closeModal}
+              setMessage={setMessage}
+              selectedUser={selectedUser}
+              fetchData={fetchData}
+            />
+          }
+        />
+      )}
+      {deleteRole && (
+        <Modal
+          isOpen={deleteRole}
+          onClose={closeModal}
+          content={
+            <RoleDeleteForm
+              onClose={closeModal}
+              setMessage={setMessage}
+              selectedUser={selectedUser}
+              fetchData={fetchData}
+            />
+          }
+        />
+      )}
       <ToastContainer />
     </div>
   );
@@ -214,7 +270,7 @@ const SummaryCard = ({ count, label, icon }) => {
           <img src={icon} alt="image" />
         </div>
         <div className="details">
-          <p className="count">{count}</p>
+          <p className="count">{count?.toLocaleString()}</p>
           <p className="label">{label}</p>
         </div>
       </div>
