@@ -1,0 +1,49 @@
+.user-list {
+  background-color: #ffffff;
+  border: 0.5px solid #cbcbcb;
+  padding: 15px;
+}
+
+.user-list .modal .user-form {
+  width: 650px;
+}
+
+.user-list .delete-user-btn {
+  margin-left: 6px;
+  bottom: 10px;
+  background-color: rgb(185 41 41);
+  border: none;
+}
+
+.user-list .user-summary {
+  background-color: #f8f8f8;
+  padding: 20px 180px;
+  margin-bottom: 30px;
+  border: 1px solid rgb(237, 236, 236);
+  box-shadow: 1px 3px 5px #f6f2f2;
+  border: 1px solid #e9e9e9;
+}
+
+.user-list .user-summary .card-summary {
+  background-color: #ffffff;
+  display: flex;
+  border-radius: 4px;
+  padding: 10px;
+  justify-content: space-between;
+}
+
+.user-list .user-summary .details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.user-list .user-summary .details p {
+  margin: 0;
+}
+
+.user-list .user-summary .details .count {
+  font-size: 24px;
+  font-weight: 600;
+  color: #000000;
+}

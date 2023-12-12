@@ -1,0 +1,7 @@
+.login .error-msg small {
+    color: rgb(220, 24, 24);
+}
+
+.login .error-msg {
+    text-align: center;
+}

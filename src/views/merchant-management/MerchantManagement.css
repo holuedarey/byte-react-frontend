@@ -24,3 +24,7 @@
     width: 3.5em;
     height: 25px;
 }
+
+.status-details .modal .upload-form {
+    width: 460px;
+}

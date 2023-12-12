@@ -27,3 +27,10 @@
   background-color: #ffffff;
   font-size: 18px;
 }
+
+.modal small {
+  color: rgb(241, 71, 71);
+  float: right;
+  font-style: italic;
+  text-align: right;
+}
