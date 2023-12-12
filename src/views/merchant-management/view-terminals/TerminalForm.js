@@ -7,9 +7,8 @@ import httpClient from "../../../helpers/RequestInterceptor";
 export default function TerminalForm({
   isOpen,
   onClose,
-  message,
   setMessage,
-  selectedRowData,
+  fetchData,
 }) {
   const [enabled, setEnabled] = React.useState(false);
 
@@ -85,10 +84,10 @@ export default function TerminalForm({
           "Content-Type": "application/json",
         },
       })
-      .then((response) => {
-        console.log("response", response);
+      .then(() => {
         setMessage("Terminal Created Successfully");
         onClose();
+        fetchData();
       })
       .catch(function (error) {
         console.log("Error processing request", error);
@@ -115,7 +114,7 @@ export default function TerminalForm({
             {...register("email")}
           />
           {errors.email && (
-            <div className="invalid-feedback">{errors.email.message}</div>
+            <small className="invalid-feedback">{errors.email.message}</small>
           )}
         </div>
 
@@ -131,7 +130,9 @@ export default function TerminalForm({
             {...register("terminalId")}
           />
           {errors.terminalId && (
-            <div className="invalid-feedback">{errors.terminalId.message}</div>
+            <small className="invalid-feedback">
+              {errors.terminalId.message}
+            </small>
           )}
         </div>
 
@@ -149,9 +150,9 @@ export default function TerminalForm({
             {...register("serialNumber")}
           />
           {errors.serialNumber && (
-            <div className="invalid-feedback">
+            <small className="invalid-feedback">
               {errors.serialNumber.message}
-            </div>
+            </small>
           )}
         </div>
 
@@ -187,9 +188,9 @@ export default function TerminalForm({
             {...register("physicalAddress")}
           />
           {errors.physicalAddress && (
-            <div className="invalid-feedback">
+            <small className="invalid-feedback">
               {errors.physicalAddress.message}
-            </div>
+            </small>
           )}
         </div>
 
@@ -207,9 +208,9 @@ export default function TerminalForm({
             {...register("postalAddress")}
           />
           {errors.postalAddress && (
-            <div className="invalid-feedback">
+            <small className="invalid-feedback">
               {errors.postalAddress.message}
-            </div>
+            </small>
           )}
         </div>
 
@@ -225,7 +226,7 @@ export default function TerminalForm({
             {...register("phone")}
           />
           {errors.phone && (
-            <div className="invalid-feedback">{errors.phone.message}</div>
+            <small className="invalid-feedback">{errors.phone.message}</small>
           )}
         </div>
 
@@ -233,7 +234,9 @@ export default function TerminalForm({
         <div className="col-2 mb-3 form-check form-switch">
           <label className="form-check-label form-label" htmlFor="enabled">
             {errors.enabled ? (
-              <div className="invalid-feedback">{errors.enabled.message}</div>
+              <small className="invalid-feedback">
+                {errors.enabled.message}
+              </small>
             ) : enabled ? (
               "Enabled"
             ) : (

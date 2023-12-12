@@ -102,7 +102,7 @@ export default function Dashboard({ status }) {
           </div>
         </div>
       </div>
-      <div className="label ms-5 mt-4">
+      <div className="labeled ms-5 mt-4">
         <div>
           <div className="d-flex flex-row">
             <div className="data-label value mt-1 me-2"></div>

@@ -9,7 +9,7 @@ import TerminalEditForm from "./TerminalEditForm";
 import httpClient from "../../../helpers/RequestInterceptor";
 import HandleGetApi from "../../../components/handleApi/HandleGetApi";
 
-export default function StatusDetails({ summary }) {
+export default function StatusDetails() {
   const [msg, setMsg] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -82,7 +82,7 @@ export default function StatusDetails({ summary }) {
           "Content-Type": "application/json",
         },
       })
-      .then((response) => {
+      .then(() => {
         fetchData();
       })
       .catch((error) => {
@@ -197,6 +197,7 @@ export default function StatusDetails({ summary }) {
                     onClose={closeModal}
                     message={msg}
                     setMessage={setMsg}
+                    fetchData={fetchData}
                   />
                 }
               />
@@ -228,6 +229,7 @@ export default function StatusDetails({ summary }) {
                     onClose={closeModal}
                     message={msg}
                     setMessage={setMsg}
+                    fetchData={fetchData}
                   />
                 }
               />

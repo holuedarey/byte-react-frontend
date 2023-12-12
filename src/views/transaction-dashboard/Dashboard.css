@@ -1,6 +1,6 @@
 .dashboard {
   background-color: #ffffff;
-  border: 0.5px solid #CBCBCB;
+  border: 0.5px solid #cbcbcb;
 }
 
 .dashboard .summary-heading {
@@ -16,7 +16,7 @@
 }
 
 .success {
-  color: #00865A;
+  color: #00865a;
 }
 
 .count-success {
@@ -28,90 +28,89 @@
 }
 
 .failed {
-  color: #FF024B;
+  color: #ff024b;
   margin-top: 22px;
 }
 
 .count-failed {
-  color: #7E7E7E;
+  color: #7e7e7e;
   margin-top: 22px;
 }
 
 .terminal-failed {
-  color: #3E729B;
+  color: #3e729b;
   margin-top: 22px;
 }
 
 .failed-percent {
-  color: #9A9A9A;
+  color: #9a9a9a;
   font-size: 14px;
 }
 
 .failed-percent span {
-  color: #F23551;
+  color: #f23551;
   margin-right: 10px;
 }
 
 .success-percent {
   font-size: 14px;
-  color: #9A9A9A;
+  color: #9a9a9a;
   /* margin-bottom: 22px; */
 }
 
 .success-percent span {
-  color: #159E94;
+  color: #159e94;
   margin-right: 10px;
 }
 
-
-.circle-bar{
-    padding-left: 1rem;
-  }
+.circle-bar {
+  padding-left: 1rem;
+}
 
 .circle-bar-area {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: 30px;
 }
 
 .dashboard .CircularProgressbar {
-    /* width: 90% !important; */
-    vertical-align: middle !important;
+  /* width: 90% !important; */
+  vertical-align: middle !important;
 }
 
 .dashboard .CircularProgressbar-path {
-    stroke-width: 10;
-  }
+  stroke-width: 10;
+}
 
-  .dashboard .CircularProgressbar-trail {
-    stroke-width: 10;
+.dashboard .CircularProgressbar-trail {
+  stroke-width: 10;
 }
 
 .center-label {
-  color: #9A9A9A;;
+  color: #9a9a9a;
 }
 
 .center-label .amount {
-  color: #3E4095;
+  color: #3e4095;
 }
 
-.label {
+.labeled {
   display: flex;
   justify-content: start;
   gap: 10px;
-  color: #9A9A9A;
+  color: #9a9a9a;
   font-size: 12px;
 }
 
 .data-label {
   width: 11px;
-  height: 12px; 
+  height: 12px;
 }
 
 .value {
-  background-color: #00865A;
+  background-color: #00865a;
 }
 
 .volume {
@@ -119,5 +118,5 @@
 }
 
 .terminal {
-  background-color: #406A99;
+  background-color: #406a99;
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import "./Signin.css";
 import PostData from "../../components/handleApi/PostData";
 import { useNavigate } from "react-router-dom";
 
@@ -13,25 +14,26 @@ export default function Signin() {
   const data = { username: email, password: password };
   const navigate = useNavigate();
 
-
   const Login = (e) => {
     e.preventDefault();
     PostData(url, data).then((result) => {
-      const { error, message } = result;
-      if (error) {
-        setErr(true);
-        setMsg(message[0]);
-        return;
+      console.log("data", result);
+      const { responseCode, responseMessage } = result;
+
+      if (responseCode === 0) {
+        navigate("/transactions");
+      } else {
+        setMsg(responseMessage);
       }
-      navigate("/transactions");
     });
   };
 
   return (
-    <div className="d-flex justify-content-center">
+    <div className="login d-flex justify-content-center">
       <div className="bg-white mt-5 p-4 w-50">
         <form onSubmit={Login}>
           <h1 className="text-center">Sign In</h1>
+          <div className="error-msg"><small className="mb-3 mt-3">{msg && msg}</small></div>
           <div className="mb-3 mt-3">
             <label htmlFor="email" className="form-label">
               Email:
