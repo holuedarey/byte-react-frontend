@@ -11,18 +11,30 @@ import pendingIcon from "../../images/pending-transaction.svg";
 import totalIcon from "../../images/all-transaction.svg";
 import RoleUpdateForm from "./RoleUpdateForm";
 import RoleDeleteForm from "./RoleDeleteForm";
+import FormatDate from "../../helpers/FormatDate";
+import FilterUserList from "./FilterUserList";
 
 export default function UserList() {
   const [openUserForm, setOpenUserForm] = useState(false);
   const [message, setMessage] = useState("");
   const [users, setUsers] = useState({});
   const [summary, setSummary] = useState({});
+  const [role, setRole] = useState("");
   const [editRole, setEditRole] = useState(false);
   const [deleteRole, setDeleteRole] = useState(false);
   const [selectedUser, setSelectedUser] = useState({});
   const data = JSON.parse(localStorage.getItem("user"));
+  const [limit, setLimit] = useState(50);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [searchParam, setSearchParam] = useState("");
+  const [emailParam, setEmailParam] = useState("");
+  const [permissionParam, setPermissionParam] = useState("");
+  const [userStatus, setUserStatus] = useState(false);
 
-  // console.log("users", users);
+  const formattedStartDate = FormatDate(startDate);
+  const formattedEndDate = FormatDate(endDate);
 
   const hasApprovalPermission = data.permissions.includes("approval");
 
@@ -39,7 +51,10 @@ export default function UserList() {
   };
 
   const fetchData = () => {
-    HandleGetApi(`users/users`, setUsers);
+    HandleGetApi(
+      `users/users?role=${role}&page=${pageNumber}&limit=${limit}&startdate=${formattedStartDate}&enddate=${formattedEndDate}&search=${searchParam}&email=${emailParam}&permissions=${permissionParam}&approval=${userStatus}`,
+      setUsers
+    );
   };
 
   const getSummary = () => {
@@ -217,7 +232,22 @@ export default function UserList() {
               />
             </div>
           </div>
-          <Table columns={columns} data={userList} />
+          <FilterUserList
+            limit={limit}
+            startDate={startDate}
+            endDate={endDate}
+            setLimit={setLimit}
+            setEndDate={setEndDate}
+            setStartDate={setStartDate}
+            searchParm={searchParam}
+            setSearchParam={setSearchParam}
+            fetchData={fetchData}
+          />
+          {userList.length > 0 ? (
+            <Table columns={columns} data={userList} />
+          ) : (
+            <p className="no-record">No record found</p>
+          )}
         </>
       )}
       {openUserForm && (

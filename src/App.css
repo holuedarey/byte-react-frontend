@@ -144,3 +144,9 @@ a {
 .form-check-input {
   cursor: pointer;
 }
+
+.no-record {
+  text-align: center;
+  margin-top: 15px;
+  color: #000000;
+}

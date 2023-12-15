@@ -72,3 +72,10 @@
   background-color: #e01b1b;
 }
 
+.user-list .date-filter {
+  display: flex;
+}
+
+.user-list .date-filter p {
+  margin: auto;
+}

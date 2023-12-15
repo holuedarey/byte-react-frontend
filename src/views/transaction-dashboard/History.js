@@ -137,7 +137,11 @@ export default function History({
       </div>
       <div>
         <div className="history-table table-responsive">
-          <Table columns={columns} data={history} />
+          {history.length > 0 ? (
+            <Table columns={columns} data={history} />
+          ) : (
+            <p className="no-record">No record found</p>
+          )}
         </div>
       </div>
     </div>

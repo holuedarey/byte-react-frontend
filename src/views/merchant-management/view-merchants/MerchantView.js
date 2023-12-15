@@ -1,8 +1,8 @@
-import React from 'react';
-import './MerchantView.css';
-import Table from '../../../components/Table';
+import React from "react";
+import "./MerchantView.css";
+import Table from "../../../components/Table";
 
-export default function MerchantView({merchants}) {
+export default function MerchantView({ merchants }) {
   const columns = React.useMemo(
     () => [
       {
@@ -41,18 +41,22 @@ export default function MerchantView({merchants}) {
     []
   );
   return (
-    <div className='merchant-view'>
-      <div className='row'>
-        <div className='merchant-count'>
-          <h3 className='heading'>Current Merchant</h3>
-          <p className='count'>{merchants?.length}</p>
+    <div className="merchant-view">
+      <div className="row">
+        <div className="merchant-count">
+          <h3 className="heading">Current Merchant</h3>
+          <p className="count">{merchants?.length}</p>
         </div>
       </div>
       <div className="mt-1">
         <div className="table-responsive table-wrapper">
-          <Table columns={columns} data={merchants} />
+          {merchants.length > 0 ? (
+            <Table columns={columns} data={merchants} />
+          ) : (
+            <p className="no-record">No record found</p>
+          )}
         </div>
       </div>
     </div>
-  )
+  );
 }
