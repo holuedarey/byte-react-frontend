@@ -21,7 +21,6 @@
   margin-bottom: 30px;
   border: 1px solid rgb(237, 236, 236);
   box-shadow: 1px 3px 5px #f6f2f2;
-  border: 1px solid #e9e9e9;
 }
 
 .user-list .user-summary .card-summary {
@@ -30,6 +29,7 @@
   border-radius: 4px;
   padding: 10px;
   justify-content: space-between;
+  border: 1px solid #e9e9e9;
 }
 
 .user-list .user-summary .details {
@@ -46,4 +46,36 @@
   font-size: 24px;
   font-weight: 600;
   color: #000000;
+}
+
+.user-list .modal .dropdown {
+  padding: 10px !important;
+  background-color: transparent !important;
+}
+
+.user-list .user-action {
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.fa-edit {
+  color: rgb(28, 118, 253);
+}
+
+.user-list .user-action .fa-trash {
+  color: rgb(255, 64, 64);
+}
+
+.user-list .modal .btn-del {
+  background-color: #e01b1b;
+}
+
+.user-list .date-filter {
+  display: flex;
+}
+
+.user-list .date-filter p {
+  margin: auto;
 }

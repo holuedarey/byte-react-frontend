@@ -14,8 +14,10 @@ export default function Navbar() {
     username = data?.username;
   }
 
+  // console.log("open ddataropdown", data);
+
   const openDropdown = () => {
-    console.log("open dropdown");
+    // console.log("open dropdown");
     setIsOpen((prevState) => !prevState);
   };
 
@@ -65,6 +67,7 @@ export default function Navbar() {
             </div>
           </div>
           <div className={isOpen ? "user-menu" : "user-menu hide"}>
+            <div className="menu-header">{data?.emailAddress}</div>
             <ul>
               <li onClick={handleSignout}>
                 <img className="logout-img" src={logout} alt="logout" />

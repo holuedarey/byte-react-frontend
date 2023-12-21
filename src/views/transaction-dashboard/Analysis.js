@@ -1,7 +1,7 @@
 import React from "react";
 import Table from "../../components/Table";
-import { CSVLink } from "react-csv"; 
-import './Analysis.css'
+import { CSVLink } from "react-csv";
+import "./Analysis.css";
 
 export default function Analysis({ performance, nextPage, prevPage }) {
   // console.log(performance);
@@ -91,7 +91,11 @@ export default function Analysis({ performance, nextPage, prevPage }) {
       <hr />
       <div className="p-4">
         <div className="table-responsive table-wrapper">
-          <Table columns={columns} data={performance} />
+          {performance.length > 0 ? (
+            <Table columns={columns} data={performance} />
+          ) : (
+            <p className="no-record">No record found</p>
+          )}
         </div>
       </div>
       <hr />

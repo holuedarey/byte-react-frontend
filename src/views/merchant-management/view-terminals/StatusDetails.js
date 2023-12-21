@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "../../../components/Table";
 import ModalTerminalUpload from "../../../components/ModalUploadTerminal";
 import Modal from "../../../components/modal/Modal";
@@ -8,6 +8,11 @@ import "react-toastify/dist/ReactToastify.css";
 import TerminalEditForm from "./TerminalEditForm";
 import httpClient from "../../../helpers/RequestInterceptor";
 import HandleGetApi from "../../../components/handleApi/HandleGetApi";
+import CustomSelect from "../../../components/customSelect/CustomSelect";
+import GroupedInput from "../../../components/groupedInput/GroupedInput";
+import DateRange from "../../../components/dateRange/DateRange";
+import FormatDate from "../../../helpers/FormatDate";
+import Pagination from "../../../components/Pagination";
 
 export default function StatusDetails() {
   const [msg, setMsg] = useState("");
@@ -15,36 +20,26 @@ export default function StatusDetails() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState({});
-  const [terminals, setTerminal] = React.useState([]);
+  const [terminals, setTerminal] = useState([]);
   const data = terminals?.terminalDetails ?? [];
-  const [pageNumber, setPageNumber] = React.useState(1);
-  const [startDate, setStartDate] = React.useState(new Date());
-  const [endDate, setEndDate] = React.useState(new Date());
-  const [searchParm, setSearchParam] = React.useState("");
+  const [pageNumber, setPageNumber] = useState(1);
+  const [limit, setLimit] = useState(50);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [searchParm, setSearchParam] = useState("");
+  const totalVol = terminals?.terminalDetails?.length;
+  const lastPageNum = Math.ceil(totalVol / limit);
+  const pageStart = (pageNumber - 1) * limit + 1;
 
-  const postPerPage = 50;
-  const pageStart = (pageNumber - 1) * postPerPage + 1;
-  // const formattedDate =
-  //   date.getFullYear() +
-  //   "-" +
-  //   parseInt(date.getMonth() + 1) +
-  //   "-" +
-  //   date.getDate();
-  const formattedStartDate =
-    startDate.getFullYear() +
-    "-" +
-    parseInt(startDate.getMonth() + 1) +
-    "-" +
-    startDate.getDate();
-  const formattedEndDate =
-    endDate.getFullYear() +
-    "-" +
-    parseInt(endDate.getMonth() + 1) +
-    "-" +
-    endDate.getDate();
-  // const [enabled, setEnabled] = useState(false);
+  const handleInputChange = (newValue) => {
+    setSearchParam(newValue);
+  };
 
-  // console.log("term", terminals, data)
+  const formattedStartDate = FormatDate(startDate);
+  const formattedEndDate = FormatDate(endDate);
+
+  // console.log("terminals", terminals?.terminalDetails?.length);
+
   const message = "";
 
   const closeModal = () => {
@@ -67,7 +62,10 @@ export default function StatusDetails() {
   };
 
   const fetchData = () => {
-    HandleGetApi(`terminal/getTerminals?limit=${postPerPage}&page=${pageNumber}&startdate=${formattedStartDate}&enddate=${formattedEndDate}&search=${searchParm}`, setTerminal);
+    HandleGetApi(
+      `terminal/getTerminals?limit=${limit}&page=${pageNumber}&startdate=${formattedStartDate}&enddate=${formattedEndDate}&search=${searchParm}`,
+      setTerminal
+    );
   };
 
   const toggleStatus = (rowData) => {
@@ -161,14 +159,19 @@ export default function StatusDetails() {
     [data]
   );
 
-  React.useEffect(() => {
+  const handleFilterList = (e) => {
+    e.preventDefault();
+    fetchData();
+  };
+
+  useEffect(() => {
     if (msg?.trim().length > 0) {
       toast(msg);
       setMsg(""); // Clear the message after displaying the toast
     }
   }, [msg]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -235,7 +238,62 @@ export default function StatusDetails() {
               />
             )}
           </div>
-          <Table columns={columns} data={data} />
+          <form className="row mb-3">
+            <div className="col-2">
+              <CustomSelect
+                heading="Limit"
+                selectedVal={limit ? limit : "Select Limit"}
+                setSelectedValue={setLimit}
+                items={[
+                  { name: "50" },
+                  { name: "100" },
+                  { name: "200" },
+                  { name: "300" },
+                  { name: "400" },
+                  { name: "500" },
+                ]}
+              />
+            </div>
+            <div className="col-2">
+              <GroupedInput
+                label="Search By"
+                placeholder=""
+                value={searchParm}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="col-3">
+              <div className="date-filter">
+                <p>Filter by Date: </p>
+                <DateRange
+                  startDate={startDate}
+                  endDate={endDate}
+                  handleStartDate={(date) => setStartDate(date)}
+                  handleEndDate={(date) => setEndDate(date)}
+                />
+              </div>
+            </div>
+            <div className="col-2">
+              <button className="btn" onClick={handleFilterList}>
+                Filter
+              </button>
+            </div>
+          </form>
+          {data.length > 0 ? (
+            <Table columns={columns} data={data} />
+          ) : (
+            <p className="no-record">No record found</p>
+          )}
+          {lastPageNum > 1 && (
+            <Pagination
+              prevPage={pageNumber - 1}
+              nextPage={pageNumber + 1}
+              totalPages={lastPageNum}
+              hasNextPage={pageNumber < lastPageNum}
+              hasPrevPage={pageNumber > 1}
+              setPageNum={setPageNumber}
+            />
+          )}
         </div>
       </div>
       <ToastContainer />

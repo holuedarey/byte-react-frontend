@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import httpClient from "../../helpers/RequestInterceptor";
+import CustomSelect from "../../components/customSelect/CustomSelect";
 
 export default function CreateUserForm({ onClose, setMessage }) {
+  const [role, setRole] = useState("");
+  const [permission, setPermission] = useState("");
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
@@ -20,8 +23,11 @@ export default function CreateUserForm({ onClose, setMessage }) {
       .string()
       .matches(phoneRegExp, "Phone number is not valid!")
       .required(),
-    role: yup.string(),
-    permission: yup.string().required("Permissions are required"),
+    role: yup.string().default(role),
+    permission: yup
+      .string()
+      .required("Permissions are required")
+      .default(permission),
     password: yup
       .string()
       .min(6, "Password must be at least 6 characters!")
@@ -56,9 +62,8 @@ export default function CreateUserForm({ onClose, setMessage }) {
           "Content-Type": "application/json",
         },
       })
-      .then((response) => {
+      .then(() => {
         setMessage("Terminal Created Successfully");
-        // console.log("res", response);
         onClose();
       })
       .catch(function (error) {
@@ -188,14 +193,14 @@ export default function CreateUserForm({ onClose, setMessage }) {
         </div>
 
         <div className="col-6 mb-3">
-          <label className="form-label" htmlFor="role">
+          <label className="form-label" htmlFor="confirm-password">
             Role:
           </label>
-          <input
-            className={`form-control ${errors.role ? "is-invalid" : ""}`}
-            type="text"
-            id="role"
-            {...register("role")}
+          <CustomSelect
+            selectedVal={role ? role : "Select Role"}
+            setSelectedValue={setRole}
+            items={[{ name: "admin" }, { name: "super-admin" }]}
+            defaultOption={{ label: "Select Role", value: "" }}
           />
         </div>
 
@@ -203,11 +208,11 @@ export default function CreateUserForm({ onClose, setMessage }) {
           <label className="form-label" htmlFor="permission">
             Permissions:
           </label>
-          <input
-            className={`form-control ${errors.permission ? "is-invalid" : ""}`}
-            type="text"
-            id="permission"
-            {...register("permission")}
+          <CustomSelect
+            selectedVal={permission ? permission : "Select Permission"}
+            setSelectedValue={setPermission}
+            items={[{ name: "checker" }, { name: "approval" }]}
+            defaultOption={{ label: "Select Permission", value: "" }}
           />
           {errors.permission && (
             <small className="error-text">{errors.permission.message}</small>

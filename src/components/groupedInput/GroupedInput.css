@@ -1,0 +1,27 @@
+.grouped-input {
+  background-color: transparent;
+  border: 1px solid #48484833;
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+
+.grouped-input-error {
+  border: 1px solid #f41649 !important;
+}
+
+.grouped-input small {
+  color: #f41649;
+  font-size: 12px;
+}
+
+.grouped-input label {
+  font-size: 10px;
+  color: #a0a0a0;
+}
+
+.grouped-input input {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none !important;
+}
